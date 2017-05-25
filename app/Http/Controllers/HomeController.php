@@ -16,13 +16,9 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function index(Request $request)
     {
+        session(['info' => array('test'=>1,'test2'=>1)]);
         return view('home');
     }
 }
