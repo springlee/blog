@@ -43,11 +43,51 @@ if (token) {
  * allows your team to easily build robust real-time web applications.
  */
 
-// import Echo from 'laravel-echo'
+import Echo from 'laravel-echo'
 
 // window.Pusher = require('pusher-js');
-
+//
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
-//     key: 'your-pusher-key'
+//     key: '44cdbe4ee7a000dab8bf',
+//     cluster: 'ap1',
+//     encrypted: true
 // });
+
+window.Echo = new Echo({
+    broadcaster: 'socket.io',
+    host: window.location.hostname + ':6001'
+});
+
+/**
+ * 坑
+ */
+window.Echo.private('chat-room.1')
+    .listen('ChatMessageWasReceived', function (data) {
+        alert(1);
+        console.log(data.user, data.chatMessage);
+    });
+
+// window.Echo.join('chat-room.1').here(function(users){
+//     console.log(users)
+// })
+// .joining(function (user) {
+//     console.log(user.name);
+// })
+// .leaving((function (user) {
+//     console.log(user.name);
+// }).listen('ChatMessageWasReceived', function (data) {
+//     alert(1);
+//     console.log(data.user, data.chatMessage);
+// })
+
+window.Echo.join('chat-room.1').here((users) => {
+      console.table(users);
+}).joining((user) => {
+    console.log(user.name+'join');
+}).leaving((user) => {
+    console.log(user.name+'leaving');
+}).listen('ChatMessageWasReceived', function (data) {
+    alert(1);
+    console.log(data.user, data.chatMessage);
+});

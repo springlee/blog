@@ -89,6 +89,24 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
                 </div>
+                @component('alert', ['foo' => 'bar'])
+                @slot('title')
+                拒绝
+                @endslot
+                @slot('title1')
+                拒绝1
+                @endslot
+                你没有权限访问这个资源！
+                @endcomponent
+                <h1>Laravel</h1>
+
+                Hello, @{{ name }}.
+
+                @verbatim
+                <div class="container">
+                    Hello, {{ name }}.
+                </div>
+                @endverbatim
             </div>
         </div>
     </body>

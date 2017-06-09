@@ -12,6 +12,7 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        //
+       // 'test'  设置这个路径不csrf 验证
     ];
+    
 }
