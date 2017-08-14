@@ -114,6 +114,39 @@ Route::get('test/broadcasting', function () {
 
 
 
+Route::get('test/cache', function () {
+//    Cache::put('bar', 'baz', 10);
+//
+//
+//    echo  Cache::get('bar');
+
+
+//    Cache::store('redis')->put('bar', 'baz', 10);
+
+//    $value = Cache::remember('key',1, function () {
+//        return 1;
+//    });
+//
+//    echo  $value;
+
+  var_dump( Cache::add('key', 'value', 1)) ;
+});
+
+
+
+Route::get('test/log', function (Request $request) {
+    $user =$request->user();
+    Log::info('User failed to login.', ['id' => $user->id]);
+});
+
+Route::get('test/log1', function (Request $request) {
+    $user =$request->user();
+   echo  $user->id;
+});
+
+
+
+
 Route::get('/redirect', function () {
     $query = http_build_query([
         'client_id' => '3',

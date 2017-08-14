@@ -30,22 +30,47 @@ class Handler extends ExceptionHandler
      * @param  \Exception  $exception
      * @return void
      */
-    public function report(Exception $exception)
+//    public function report(Exception $exception)
+//    {
+//        parent::report($exception);
+//    }
+//
+//    /**
+//     * Render an exception into an HTTP response.
+//     *
+//     * @param  \Illuminate\Http\Request  $request
+//     * @param  \Exception  $exception
+//     * @return \Illuminate\Http\Response
+//     */
+//    public function render($request, Exception $exception)
+//    {
+//        return parent::render($request, $exception);
+//    }
+
+
+
+    private $sentryID;
+
+    public function report(Exception $e)
     {
-        parent::report($exception);
+        if ($this->shouldReport($e)) {
+            // bind the event ID for Feedback
+            $this->sentryID = app('sentry')->captureException($e);
+        }
+        parent::report($e);
     }
 
-    /**
-     * Render an exception into an HTTP response.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
-     * @return \Illuminate\Http\Response
-     */
-    public function render($request, Exception $exception)
+    // ...
+    public function render($request, Exception $e)
     {
-        return parent::render($request, $exception);
+        return response()->view('errors.500', [
+            'sentryID' => $this->sentryID,
+        ], 500);
     }
+
+
+
+
 
     /**
      * Convert an authentication exception into an unauthenticated response.
